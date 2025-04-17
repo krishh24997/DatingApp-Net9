@@ -8,12 +8,14 @@
             "name": "C#: API Debug",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/API.csproj"
+            "projectPath": "${workspaceFolder}/API.csproj",
+            "enableStepFiltering": false
         },
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
-            "request": "attach"
+            "request": "attach",
+            "enableStepFiltering": false
         }
 
 
