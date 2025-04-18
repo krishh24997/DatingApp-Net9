@@ -34,7 +34,7 @@ public class AccountController(DataContex contex, Interfaces.ITokenservice token
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<UserDto>> Login(LoginDto logindto)
+    public async Task<ActionResult<UserDto>>Login(LoginDto logindto)
     {
         var user = await contex.Users.FirstOrDefaultAsync(x => x.UserName.ToLower() == logindto.Username.ToLower());
         if (user == null) return Unauthorized("Invalid UserName or Password");
