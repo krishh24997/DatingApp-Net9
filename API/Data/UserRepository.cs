@@ -30,7 +30,7 @@ public class UserRepository(DataContex context,IMapper mapper) : IUserRepository
         return await context.Users.FindAsync(id);
     }
 
-    public async Task<AppUser?> GetUserByUserName(string username)
+    public async Task<AppUser?> GetUserByUsernameAsync(string username)
     {
         return await context.Users
          .Include(x=>x.Photos)
