@@ -36,7 +36,9 @@ public class AccountController(DataContex contex, Interfaces.ITokenservice token
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>>Login(LoginDto logindto)
     {
-        var user = await contex.Users.FirstOrDefaultAsync(x => x.UserName.ToLower() == logindto.Username.ToLower());
+        var user = await contex.Users
+        .Include(p=>p.Photos)
+        .FirstOrDefaultAsync(x => x.UserName.ToLower() == logindto.Username.ToLower());
         if (user == null) return Unauthorized("Invalid UserName or Password");
         var hmac = new HMACSHA512(user.PasswordSalt);
         var ComputedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(logindto.Password));
@@ -54,7 +56,8 @@ public class AccountController(DataContex contex, Interfaces.ITokenservice token
         return new UserDto
         {
             Username = user.UserName,
-            Token = tokenservice.CreateToken(user)
+            Token = tokenservice.CreateToken(user),
+            PhotoUrl=user.Photos.FirstOrDefault(x=> x.IsMain)?.Url
 
 
         };
